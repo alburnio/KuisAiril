@@ -1,65 +1,837 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mechatronics Quiz Arena</title>
-<style>
-:root{--bg:#070b14;--panel:#101827;--panel2:#151f32;--cyan:#31e8ff;--violet:#a66bff;--green:#45f5a6;--red:#ff5478;--text:#edf5ff;--muted:#91a4bf}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#132c49 0,transparent 38%),radial-gradient(ellipse at 100% 25%,#251542 0,transparent 34%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;background-image:linear-gradient(#31506d 1px,transparent 1px),linear-gradient(90deg,#31506d 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
-.wrap{width:min(1100px,92vw);margin:auto;padding:28px 0 50px;position:relative}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:55px}.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.04em}.logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#06101a;font-size:22px;box-shadow:0 0 26px #31e8ff40}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.22em;margin-top:3px}.top-actions{display:flex;gap:9px;flex-wrap:wrap}.pill,.btn{border:1px solid #33435b;background:#101827;color:var(--text);border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;transition:.2s}.pill:hover,.btn:hover{border-color:var(--cyan);transform:translateY(-2px)}.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:25px;align-items:center;margin-bottom:32px}.eyebrow{color:var(--cyan);letter-spacing:.22em;font-size:12px;font-weight:800}.hero h1{font-size:clamp(36px,6vw,68px);line-height:.99;letter-spacing:-.055em;margin:15px 0}.hero h1 span{background:linear-gradient(90deg,var(--cyan),#a5b8ff,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:16px;line-height:1.7;max-width:560px}.hero-art{min-height:230px;display:grid;place-items:center;position:relative}.orb{width:185px;height:185px;border:1px solid #31e8ff8c;border-radius:50%;display:grid;place-items:center;position:relative;box-shadow:0 0 55px #31e8ff1e,inset 0 0 35px #31e8ff12;animation:float 4s ease-in-out infinite}.orb:before,.orb:after{content:"";position:absolute;border:1px dashed #a66bff88;border-radius:50%;inset:-19px;animation:spin 18s linear infinite}.orb:after{inset:15px;border-style:solid;border-color:#31e8ff55;animation-direction:reverse;animation-duration:10s}.orb span{font-size:66px;filter:drop-shadow(0 0 16px #31e8ff)}.spark{position:absolute;color:var(--cyan);animation:pulse 2s infinite}.s1{top:20%;left:18%}.s2{right:13%;bottom:18%;color:var(--violet);animation-delay:.8s}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 30px}.stat,.panel,.level-card{background:linear-gradient(145deg,#121c2dE8,#0c1321E8);border:1px solid #26364c;border-radius:18px;padding:18px;box-shadow:0 12px 35px #0002}.stat strong{font-size:25px;display:block}.stat span{color:var(--muted);font-size:12px}.section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:34px 0 15px}.section-title h2{margin:0;font-size:22px}.section-title p{margin:5px 0 0;color:var(--muted);font-size:13px}.levels{display:grid;grid-template-columns:1fr 1fr;gap:16px}.level-card{padding:23px;position:relative;overflow:hidden;transition:.25s}.level-card:hover{transform:translateY(-4px);border-color:#31e8ff88;box-shadow:0 15px 40px #31e8ff0d}.level-card:after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;right:-50px;top:-60px;background:#31e8ff0b;filter:blur(3px)}.level-top{display:flex;justify-content:space-between;align-items:center}.level-no{font-size:11px;letter-spacing:.15em;color:var(--cyan);font-weight:900}.level-icon{font-size:28px}.level-card h3{font-size:24px;margin:12px 0 8px}.level-card p{color:var(--muted);line-height:1.6;font-size:14px;min-height:45px}.tags{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0 20px}.tag{font-size:11px;color:#c7d6eb;background:#1a2940;border:1px solid #293c56;padding:6px 9px;border-radius:8px}.primary{background:linear-gradient(100deg,#24d9f3,#7a83ff);color:#06111c;border:0;padding:13px 17px;border-radius:11px;font-weight:900;cursor:pointer;width:100%;box-shadow:0 7px 25px #31e8ff20}.primary:hover{filter:brightness(1.12);transform:translateY(-1px)}.quiz{display:none;margin-top:25px;animation:rise .4s ease}.quiz.active{display:block}.quiz-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:17px}.progress{height:7px;background:#202c40;border-radius:99px;overflow:hidden;margin:12px 0 20px}.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .3s}.qmeta{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:.1em}.question{font-size:clamp(20px,3vw,27px);line-height:1.35;margin:10px 0 20px}.answers{display:grid;gap:10px}.answer{background:#111b2b;border:1px solid #2b3a50;color:var(--text);border-radius:12px;padding:15px;text-align:left;cursor:pointer;transition:.18s;display:flex;gap:12px;align-items:center}.answer b{width:28px;height:28px;border:1px solid #41516b;border-radius:8px;display:grid;place-items:center;color:var(--muted);font-size:12px;flex-shrink:0}.answer:hover:not(:disabled){border-color:var(--cyan);background:#15263a}.answer.correct{border-color:var(--green);background:#123328}.answer.wrong{border-color:var(--red);background:#351927}.answer:disabled{cursor:default}.feedback{margin-top:15px;padding:13px 15px;border-radius:12px;background:#111b2b;color:var(--muted);display:none;line-height:1.5}.feedback.show{display:block;animation:rise .25s}.feedback.good{border:1px solid #45f5a655;color:#baf8dc}.feedback.bad{border:1px solid #ff547855;color:#ffd0db}.quiz-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px}.btn-cyan{background:var(--cyan);color:#07111b;border:0}.result{text-align:center;padding:30px 10px}.result .medal{font-size:58px;animation:float 3s infinite}.result h2{font-size:34px;margin:12px}.result p{color:var(--muted)}.result-score{font-size:52px;font-weight:900;color:var(--cyan)}.hidden{display:none!important}.footer{text-align:center;color:#61748f;font-size:12px;margin-top:45px}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;background:#15243a;border:1px solid #334b69;padding:11px 16px;border-radius:12px;transition:.25s;pointer-events:none;z-index:5}.toast.show{opacity:1;transform:translate(-50%,0)}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{0%,100%{opacity:.4;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@media(max-width:720px){.hero{grid-template-columns:1fr}.hero-art{min-height:170px;grid-row:1}.orb{width:130px;height:130px}.orb span{font-size:48px}.hero{gap:4px}.top{margin-bottom:30px}.levels{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:21px}.stat span{font-size:10px}.hero h1{font-size:45px}.section-title{align-items:start;flex-direction:column}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Si Kiki - Latihan Ujian Kelas 3-4 SD</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Fredoka & Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            yellow: '#FFD166',
+                            green: '#06D6A0',
+                            blue: '#118AB2',
+                            red: '#EF476F',
+                            purple: '#8338EC',
+                            orange: '#FF9F1C'
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #E0F7FA 0%, #FFF9C4 100%);
+            min-height: 100vh;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .font-heading {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Floating Animation for Mascot */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-light {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        .animate-pulse-btn {
+            animation: pulse-light 2s infinite;
+        }
+
+        /* Custom 3D Button Effects */
+        .card-shadow {
+            box-shadow: 0 10px 0px 0px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-3d {
+            transition: all 0.15s ease;
+            box-shadow: 0 6px 0px 0px rgba(0,0,0,0.18);
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0px 0px rgba(0,0,0,0.18);
+        }
+
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0px 0px rgba(0,0,0,0.18);
+        }
+
+        /* Certificate Styling & Print Support */
+        .cert-border {
+            border: 10px solid #FFD166;
+            outline: 5px dashed #118AB2;
+            outline-offset: -15px;
+        }
+
+        @media print {
+            header, footer, .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+            }
+            #screen-result {
+                display: block !important;
+            }
+            #certificate {
+                box-shadow: none !important;
+                border: 8px solid #FFD166 !important;
+            }
+        }
+    </style>
 </head>
-<body>
-<div class="wrap">
-<header class="top">
-  <div class="brand"><div class="logo">ϟ</div><div>MECHA<span style="color:var(--cyan)">ARENA</span><small>TECHNICAL SKILLS • QUIZ SYSTEM</small></div></div>
-  <div class="top-actions"><button class="pill" id="musicBtn" title="Hidup atau matikan muzik">♫ Muzik: OFF</button><button class="pill" id="soundBtn">🔊 Kesan bunyi: ON</button></div>
-</header>
-<section class="hero">
-  <div><div class="eyebrow">/// CABARAN KEMAHIRAN TEKNIKAL</div><h1>UJI MINDA.<br><span>KUASAI MESIN.</span></h1><p>Naikkan tahap kemahiran mekatronik anda. Jawab soalan, kumpul mata XP dan buktikan anda pakar automasi seterusnya.</p><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px"><button class="btn btn-cyan" onclick="document.getElementById('levels').scrollIntoView({behavior:'smooth'})">MULA CABARAN ↘</button><button class="btn" id="howBtn">Cara bermain</button></div></div>
-  <div class="hero-art"><span class="spark s1">✦</span><span class="spark s2">✧</span><div class="orb"><span>⚙</span></div></div>
-</section>
-<div class="stats"><div class="stat"><strong id="totalXp">0 XP</strong><span>JUMLAH XP</span></div><div class="stat"><strong id="bestScore">—</strong><span>REKOD TERBAIK</span></div><div class="stat"><strong>02</strong><span>MOD TAHAP</span></div></div>
-<section id="levels"><div class="section-title"><div><h2>Pilih misi anda</h2><p>Pilih tahap untuk mula menjawab 5 soalan.</p></div><span class="eyebrow">SELECT MISSION / 02</span></div>
-<div class="levels">
- <article class="level-card"><div class="level-top"><span class="level-no">LEVEL 02 / FOUNDATION</span><span class="level-icon">🔧</span></div><h3>Tahap 2 — Asas Sistem</h3><p>Uji pengetahuan komponen, sensor, motor elektrik, pneumatik dan asas kawalan PLC.</p><div class="tags"><span class="tag">Sensor</span><span class="tag">Motor</span><span class="tag">Pneumatik</span><span class="tag">PLC asas</span></div><button class="primary" onclick="startQuiz(2)">MULAKAN TAHAP 2 →</button></article>
- <article class="level-card"><div class="level-top"><span class="level-no" style="color:var(--violet)">LEVEL 03 / ADVANCED</span><span class="level-icon">🤖</span></div><h3>Tahap 3 — Automasi</h3><p>Cabaran PLC, troubleshooting, sistem kawalan, integrasi sensor dan keselamatan industri.</p><div class="tags"><span class="tag">PLC</span><span class="tag">Troubleshooting</span><span class="tag">Kawalan</span><span class="tag">Integrasi</span></div><button class="primary" style="background:linear-gradient(100deg,#a66bff,#6e9dff)" onclick="startQuiz(3)">MULAKAN TAHAP 3 →</button></article>
-</div></section>
-<section class="quiz panel" id="quiz"><div id="quizContent">
- <div class="quiz-head"><div><div class="qmeta" id="quizLevel">LEVEL 02</div><div style="font-weight:800;margin-top:5px" id="quizTitle">Asas Sistem</div></div><div class="pill" id="timer">⏱ 20s</div></div>
- <div class="progress"><div id="progressBar"></div></div><div class="qmeta" id="questionCount">SOALAN 1 / 5</div><h2 class="question" id="questionText"></h2><div class="answers" id="answers"></div><div class="feedback" id="feedback"></div><div class="quiz-bottom"><span style="color:var(--muted);font-size:13px" id="scoreLive">Skor: 0</span><button class="btn btn-cyan" id="nextBtn" disabled>Seterusnya →</button></div>
-</div><div class="result hidden" id="result"><div class="medal" id="resultIcon">🏆</div><div class="eyebrow">MISI SELESAI</div><h2 id="resultTitle">Hebat!</h2><div class="result-score" id="resultScore">0/5</div><p id="resultDesc"></p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px"><button class="btn btn-cyan" id="retryBtn">Cuba lagi ↻</button><button class="btn" onclick="document.getElementById('levels').scrollIntoView({behavior:'smooth'})">Pilih tahap lain</button></div></div></section>
-<div class="footer">MECHAARENA • BELAJAR · UJI · TINGKATKAN KEMAHIRAN <br style="margin-bottom:7px">Nota: Soalan latihan umum, bukan pengganti SOP atau latihan keselamatan mesin.</div>
-</div><div class="toast" id="toast"></div>
-<script>
-const bank={
-2:[
-{q:"Apakah fungsi utama sensor dalam sistem mekatronik?",a:["Menyimpan tenaga elektrik","Mengesan perubahan fizikal dan menghantar isyarat","Menambah kelajuan motor secara automatik","Menggantikan semua pengawal"],c:1,e:"Sensor mengesan kuantiti seperti kedudukan, suhu atau jarak lalu menukarkannya kepada isyarat untuk sistem kawalan."},
-{q:"Komponen manakah biasanya digunakan untuk menukar tenaga elektrik kepada gerakan putaran?",a:["Relay","Fius","Motor elektrik","Termistor"],c:2,e:"Motor elektrik menukarkan tenaga elektrik kepada tenaga mekanikal, lazimnya dalam bentuk putaran."},
-{q:"Dalam sistem pneumatik, apakah medium yang digunakan untuk memindahkan tenaga?",a:["Udara termampat","Minyak pelincir sahaja","Isyarat cahaya","Air penyejuk"],c:0,e:"Sistem pneumatik menggunakan udara atau gas termampat untuk menghasilkan gerakan dan daya."},
-{q:"Apakah peranan PLC dalam sistem automasi?",a:["Menyejukkan panel kawalan","Mengawal proses berdasarkan input dan program","Mengukur berat tanpa sensor","Membekalkan udara termampat"],c:1,e:"PLC membaca input, melaksanakan logik program dan mengawal output seperti motor atau injap."},
-{q:"Apakah tujuan fius dalam litar elektrik?",a:["Meningkatkan voltan","Mengesan kedudukan silinder","Melindungi litar daripada arus berlebihan","Menukar AC kepada gerakan"],c:2,e:"Fius memutuskan litar apabila arus melebihi had tertentu, membantu mengurangkan risiko kerosakan."}
-],
-3:[
-{q:"Dalam ladder logic PLC, apakah fungsi asas kenalan NO (normally open)?",a:["Sentiasa memutuskan litar","Benar apabila bit/keadaan berkaitan ON","Menukar AC kepada DC","Melindungi daripada kebocoran udara"],c:1,e:"Kenalan NO dalam logik ladder menjadi benar apabila keadaan atau bit yang dirujuk berada dalam keadaan ON."},
-{q:"Motor tidak bergerak walaupun arahan START diberi. Apakah tindakan awal paling selamat?",a:["Terus pintaskan litar keselamatan","Naikkan voltan tanpa pemeriksaan","Ikut prosedur keselamatan, asingkan tenaga jika perlu dan periksa punca secara sistematik","Tukar semua komponen serta-merta"],c:2,e:"Utamakan SOP dan pengasingan tenaga yang sesuai. Kemudian periksa bekalan, interlock, fault dan isyarat kawalan oleh orang kompeten."},
-{q:"Mengapa interlock digunakan dalam sistem kawalan?",a:["Untuk membolehkan keadaan berbahaya berlaku lebih cepat","Untuk menghalang urutan atau keadaan operasi yang tidak dibenarkan","Untuk menaikkan suhu motor","Untuk menggantikan semua sensor"],c:1,e:"Interlock menghalang operasi apabila syarat tertentu tidak dipenuhi, bagi melindungi peralatan dan manusia."},
-{q:"Apakah tujuan maklum balas (feedback) dalam sistem kawalan gelung tertutup?",a:["Membandingkan output sebenar dengan nilai sasaran","Memadam program PLC","Menghentikan semua bacaan sensor","Menghapuskan keperluan pengawal"],c:0,e:"Feedback membolehkan pengawal membandingkan output yang diukur dengan setpoint dan membuat pembetulan."},
-{q:"Sensor kedudukan memberikan bacaan tidak stabil. Apakah langkah diagnosis yang munasabah?",a:["Abaikan bacaan","Ubah program secara rawak","Periksa sambungan, bekalan, penjajaran dan gangguan mengikut prosedur","Buang semua perlindungan mesin"],c:2,e:"Diagnosis bermula dengan pemeriksaan sistematik: pendawaian, bekalan, pemasangan, keadaan sensor dan noise."}
-]};
-let level=2,index=0,score=0,answered=false,timerId=null,timeLeft=20,soundOn=true,musicOn=false,audioCtx=null,oscillators=[],best=Number(localStorage.getItem('mechaBest')||0),xp=Number(localStorage.getItem('mechaXP')||0);
-const $=id=>document.getElementById(id);$('totalXp').textContent=xp+' XP';$('bestScore').textContent=best?best+'/5':'—';
-function beep(freq=650,duration=.12,type='sine',volume=.045){if(!soundOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(volume,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration)}catch(e){}}
-function startMusic(){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();stopMusic();musicOn=true;let notes=[220,277.18,329.63,440,329.63,277.18,246.94,329.63],i=0;function tick(){if(!musicOn)return;let now=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='triangle';o.frequency.value=notes[i%notes.length];g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.035,now+.025);g.gain.exponentialRampToValueAtTime(.0001,now+.22);o.connect(g);g.connect(audioCtx.destination);o.start(now);o.stop(now+.23);i++;musicTimer=setTimeout(tick,240)}tick();$('musicBtn').textContent='♫ Muzik: ON';$('musicBtn').style.borderColor='var(--green)'}catch(e){toast('Pelayar tidak menyokong audio ini')}}let musicTimer;
-function stopMusic(){musicOn=false;clearTimeout(musicTimer);$('musicBtn').textContent='♫ Muzik: OFF';$('musicBtn').style.borderColor=''}
-$('musicBtn').onclick=()=>{if(musicOn)stopMusic();else startMusic()};$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').textContent=soundOn?'🔊 Kesan bunyi: ON':'🔇 Kesan bunyi: OFF';if(soundOn)beep()};
-$('howBtn').onclick=()=>toast('Pilih tahap, jawab 5 soalan. Setiap jawapan betul = 100 XP. Masa setiap soalan: 20 saat.');
-function startQuiz(l){level=l;index=0;score=0;$('quiz').classList.add('active');$('quizContent').classList.remove('hidden');$('result').classList.add('hidden');$('quizLevel').textContent='LEVEL 0'+l;$('quizTitle').textContent=l===2?'Asas Sistem':'Automasi & Troubleshooting';$('quiz').scrollIntoView({behavior:'smooth',block:'start'});renderQuestion();beep(520,.15)}
-function renderQuestion(){clearInterval(timerId);answered=false;timeLeft=20;let item=bank[level][index];$('questionCount').textContent=`SOALAN ${index+1} / ${bank[level].length}`;$('progressBar').style.width=(index/bank[level].length*100)+'%';$('questionText').textContent=item.q;$('answers').innerHTML='';$('feedback').className='feedback';$('feedback').textContent='';$('nextBtn').disabled=true;$('nextBtn').textContent=index===bank[level].length-1?'Lihat keputusan →':'Seterusnya →';$('scoreLive').textContent='Skor: '+score;
-item.a.forEach((a,i)=>{let b=document.createElement('button');b.className='answer';b.innerHTML=`<b>${String.fromCharCode(65+i)}</b><span>${a}</span>`;b.onclick=()=>choose(i);$('answers').appendChild(b)});updateTimer();timerId=setInterval(()=>{timeLeft--;updateTimer();if(timeLeft<=0){clearInterval(timerId);if(!answered)choose(-1)}},1000)}
-function updateTimer(){$('timer').textContent='⏱ '+timeLeft+'s';$('timer').style.color=timeLeft<=5?'var(--red)':'var(--text)';}
-function choose(choice){if(answered)return;answered=true;clearInterval(timerId);let item=bank[level][index],buttons=[...document.querySelectorAll('.answer')];buttons.forEach((b,i)=>{b.disabled=true;if(i===item.c)b.classList.add('correct');if(i===choice&&choice!==item.c)b.classList.add('wrong')});let good=choice===item.c;if(good){score++;beep(820,.17,'triangle')}else beep(180,.25,'sawtooth',.025);let f=$('feedback');f.className='feedback show '+(good?'good':'bad');f.textContent=(good?'✓ Tepat! ':'✕ Belum tepat. ')+(choice===-1?'Masa tamat. ':'')+item.e;$('scoreLive').textContent='Skor: '+score;$('nextBtn').disabled=false;$('progressBar').style.width=((index+1)/bank[level].length*100)+'%'}
-$('nextBtn').onclick=()=>{if(!answered)return;if(index<bank[level].length-1){index++;renderQuestion()}else finish()};
-function finish(){clearInterval(timerId);let earned=score*100;xp+=earned;localStorage.setItem('mechaXP',xp);if(score>best){best=score;localStorage.setItem('mechaBest',best)}$('totalXp').textContent=xp+' XP';$('bestScore').textContent=best+'/5';$('quizContent').classList.add('hidden');$('result').classList.remove('hidden');$('resultScore').textContent=score+'/5';$('resultTitle').textContent=score===5?'Sempurna, jurutera!':score>=3?'Bagus! Terus tingkatkan.':'Terus berlatih!';$('resultIcon').textContent=score===5?'🏆':score>=3?'⚡':'🛠️';$('resultDesc').textContent=`Anda memperoleh ${earned} XP. ${score>=4?'Penguasaan yang mantap!': 'Semak penerangan jawapan dan cuba lagi untuk tingkatkan sko
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Header Navigation -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b-4 border-yellow-400 px-4 py-3 shadow-sm">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showScreen('screen-home')">
+                <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-2xl shadow-inner border-2 border-yellow-500">
+                    🐰
+                </div>
+                <div>
+                    <h1 class="font-heading text-xl md:text-2xl font-bold text-brand-blue leading-none">Petualangan Si Kiki</h1>
+                    <p class="text-xs font-bold text-slate-500">Siap Ujian SD (Kelas 3-4)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <button id="btn-audio-toggle" onclick="toggleAudio()" class="w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 font-bold border-2 border-slate-300 transition-colors" title="Suara On/Off">
+                    <i id="audio-icon" class="fas fa-volume-up"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-4xl w-full mx-auto p-4 flex flex-col justify-center items-center">
+
+        <!-- ================= 1. HOME SCREEN ================= -->
+        <section id="screen-home" class="w-full text-center space-y-6">
+            <!-- Mascot Welcome Banner -->
+            <div class="bg-white rounded-3xl p-6 card-shadow border-4 border-brand-blue relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="text-left space-y-3 md:w-2/3">
+                        <span class="inline-block bg-yellow-300 text-yellow-950 font-bold px-3 py-1 rounded-full text-sm font-heading">
+                            🌟 Halo Teman Pintar!
+                        </span>
+                        <h2 class="font-heading text-2xl md:text-4xl font-bold text-slate-800 leading-tight">
+                            Yuk, Belajar Sambil Bermain Bersama Kiki!
+                        </h2>
+                        <p class="text-slate-600 font-semibold text-sm md:text-base">
+                            Persiapkan ujian sekolahmu dengan seru. Pilih mata pelajaran favoritmu dan raih sertifikat juara!
+                        </p>
+                    </div>
+                    
+                    <!-- SVG Mascot Kiki -->
+                    <div class="relative w-36 h-36 md:w-44 md:h-44 flex-shrink-0 animate-float">
+                        <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+                            <circle cx="100" cy="100" r="90" fill="#FFD166"/>
+                            <!-- Ears -->
+                            <ellipse cx="65" cy="45" rx="15" ry="40" fill="#FFFFFF" stroke="#333" stroke-width="4"/>
+                            <ellipse cx="65" cy="45" rx="8" ry="25" fill="#FF85A1"/>
+                            <ellipse cx="135" cy="45" rx="15" ry="40" fill="#FFFFFF" stroke="#333" stroke-width="4"/>
+                            <ellipse cx="135" cy="45" rx="8" ry="25" fill="#FF85A1"/>
+                            <!-- Head -->
+                            <circle cx="100" cy="115" r="55" fill="#FFFFFF" stroke="#333" stroke-width="4"/>
+                            <!-- Eyes -->
+                            <circle cx="80" cy="105" r="7" fill="#333"/>
+                            <circle cx="120" cy="105" r="7" fill="#333"/>
+                            <circle cx="82" cy="103" r="2.5" fill="#FFF"/>
+                            <circle cx="122" cy="103" r="2.5" fill="#FFF"/>
+                            <!-- Cheeks -->
+                            <ellipse cx="70" cy="118" rx="8" ry="5" fill="#FF85A1" opacity="0.6"/>
+                            <ellipse cx="130" cy="118" rx="8" ry="5" fill="#FF85A1" opacity="0.6"/>
+                            <!-- Nose & Mouth -->
+                            <polygon points="100,113 95,118 105,118" fill="#FF85A1"/>
+                            <path d="M 95 120 Q 100 125 105 120" stroke="#333" stroke-width="3" fill="none"/>
+                            <!-- Graduation Cap -->
+                            <path d="M 60 70 L 100 50 L 140 70 L 100 90 Z" fill="#118AB2"/>
+                            <rect x="80" y="70" width="40" height="15" fill="#073B4C"/>
+                            <line x1="140" y1="70" x2="145" y2="95" stroke="#FFD166" stroke-width="3"/>
+                            <circle cx="145" cy="97" r="4" fill="#FFD166"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Selection -->
+            <div class="space-y-4">
+                <h3 class="font-heading text-xl md:text-2xl font-bold text-slate-700 flex items-center justify-center gap-2">
+                    <i class="fas fa-book-open text-brand-orange"></i> Pilih Mata Pelajaran:
+                </h3>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                    <!-- MTK -->
+                    <button onclick="selectSubject('mtk')" id="subj-mtk" class="subj-btn bg-red-400 hover:bg-red-500 text-white rounded-2xl p-4 btn-3d border-b-4 border-red-700 flex flex-col items-center gap-2">
+                        <span class="text-4xl">🔢</span>
+                        <span class="font-heading font-bold text-base md:text-lg">Matematika</span>
+                    </button>
+                    <!-- B.Indo -->
+                    <button onclick="selectSubject('indo')" id="subj-indo" class="subj-btn bg-blue-400 hover:bg-blue-500 text-white rounded-2xl p-4 btn-3d border-b-4 border-blue-700 flex flex-col items-center gap-2">
+                        <span class="text-4xl">📖</span>
+                        <span class="font-heading font-bold text-base md:text-lg">B. Indonesia</span>
+                    </button>
+                    <!-- IPAS -->
+                    <button onclick="selectSubject('ipas')" id="subj-ipas" class="subj-btn bg-emerald-400 hover:bg-emerald-500 text-white rounded-2xl p-4 btn-3d border-b-4 border-emerald-700 flex flex-col items-center gap-2">
+                        <span class="text-4xl">🌱</span>
+                        <span class="font-heading font-bold text-base md:text-lg">IPA / IPAS</span>
+                    </button>
+                    <!-- B.Inggris -->
+                    <button onclick="selectSubject('ing')" id="subj-ing" class="subj-btn bg-purple-400 hover:bg-purple-500 text-white rounded-2xl p-4 btn-3d border-b-4 border-purple-700 flex flex-col items-center gap-2">
+                        <span class="text-4xl">🔤</span>
+                        <span class="font-heading font-bold text-base md:text-lg">B. Inggris</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Mode Selection -->
+            <div class="space-y-4 pt-2">
+                <h3 class="font-heading text-xl md:text-2xl font-bold text-slate-700 flex items-center justify-center gap-2">
+                    <i class="fas fa-gamepad text-brand-purple"></i> Pilih Mode Permainan:
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Quest Mode -->
+                    <div onclick="selectMode('quest')" id="mode-quest" class="mode-card bg-white p-5 rounded-2xl border-4 border-slate-200 hover:border-yellow-400 cursor-pointer transition-all flex items-center gap-4 text-left">
+                        <div class="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0 text-yellow-600">
+                            🗺️
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-lg text-slate-800">Petualangan Belajar</h4>
+                            <p class="text-xs text-slate-500 font-semibold">3 Nyawa ❤️. Santai, kumpulkan koin & dapatkan sertifikat!</p>
+                        </div>
+                    </div>
+
+                    <!-- Time Attack Mode -->
+                    <div onclick="selectMode('time')" id="mode-time" class="mode-card bg-white p-5 rounded-2xl border-4 border-slate-200 hover:border-brand-orange cursor-pointer transition-all flex items-center gap-4 text-left">
+                        <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0 text-orange-600">
+                            ⚡
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-lg text-slate-800">Pacu Waktu (60 Detik)</h4>
+                            <p class="text-xs text-slate-500 font-semibold">Tantangan cepat ⏱️! Jawab sebanyak mungkin dalam 1 menit!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Button -->
+            <div class="pt-2">
+                <button onclick="startGame()" class="w-full md:w-2/3 bg-brand-green hover:bg-emerald-500 text-white font-heading font-bold text-2xl py-4 rounded-2xl btn-3d border-b-4 border-emerald-800 animate-pulse-btn shadow-lg">
+                    🚀 MULAI BERMAIN!
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ================= 2. GAMEPLAY SCREEN ================= -->
+        <section id="screen-game" class="w-full hidden space-y-4">
+            <!-- HUD (Heads-Up Display) -->
+            <div class="bg-white rounded-2xl p-4 card-shadow border-2 border-slate-200 flex flex-wrap justify-between items-center gap-2">
+                <!-- Subject Badge -->
+                <div id="hud-subject" class="bg-brand-blue text-white px-3 py-1.5 rounded-xl font-heading font-bold text-sm flex items-center gap-1.5">
+                    <span>📚</span> <span id="hud-subject-text">Matematika</span>
+                </div>
+
+                <!-- Game Counters -->
+                <div class="flex items-center gap-3">
+                    <!-- Lives (Quest Mode) -->
+                    <div id="hud-lives" class="flex items-center gap-1 bg-red-50 text-red-600 px-3 py-1 rounded-xl font-bold border border-red-200">
+                        <span>❤️</span> <span id="lives-count" class="text-lg">3</span>
+                    </div>
+
+                    <!-- Timer (Time Attack Mode) -->
+                    <div id="hud-timer" class="hidden flex items-center gap-1 bg-orange-50 text-orange-600 px-3 py-1 rounded-xl font-bold border border-orange-200">
+                        <span>⏱️</span> <span id="timer-count" class="text-lg">60s</span>
+                    </div>
+
+                    <!-- Coins -->
+                    <div class="flex items-center gap-1 bg-yellow-50 text-yellow-700 px-3 py-1 rounded-xl font-bold border border-yellow-300">
+                        <span>🪙</span> <span id="score-count" class="text-lg">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 card-shadow border-4 border-brand-blue relative">
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 rounded-full h-3 mb-6 overflow-hidden border border-slate-200">
+                    <div id="progress-bar" class="bg-brand-green h-full w-0 transition-all duration-300"></div>
+                </div>
+
+                <!-- Mascot Mini Speech -->
+                <div class="flex items-start gap-3 mb-4">
+                    <div class="w-12 h-12 bg-yellow-300 rounded-full flex-shrink-0 flex items-center justify-center text-xl border-2 border-yellow-500 shadow-sm">
+                        🐰
+                    </div>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-3 text-xs md:text-sm text-slate-700 font-bold flex-grow flex justify-between items-center">
+                        <span id="mascot-hint">Baca pertanyaannya dengan teliti ya! Kamu pasti bisa! 💪</span>
+                        <button onclick="speakQuestion()" class="ml-2 bg-blue-100 hover:bg-blue-200 text-brand-blue p-2 rounded-xl text-sm font-bold transition-colors flex-shrink-0" title="Dengarkan Soal">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question Text -->
+                <div class="mb-6">
+                    <span id="question-number" class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Soal 1 dari 10</span>
+                    <h3 id="question-text" class="font-heading text-xl md:text-2xl font-bold text-slate-800 leading-snug">
+                        Memuat pertanyaan...
+                    </h3>
+                </div>
+
+                <!-- Answer Options Grid -->
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- Options injected dynamically by JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= 3. EXPLANATION MODAL ================= -->
+        <div id="modal-explanation" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-3xl max-w-lg w-full p-6 card-shadow border-4 border-red-400 space-y-4 animate-bounce-in">
+                <div class="flex items-center gap-3 text-red-500">
+                    <div class="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                        💡
+                    </div>
+                    <div>
+                        <h4 class="font-heading text-xl font-bold text-slate-800">Ups, Kurang Tepat!</h4>
+                        <p class="text-xs font-semibold text-slate-500">Jangan berkecil hati, yuk pelajari pembahasannya:</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-sm text-slate-700 space-y-2">
+                    <p id="explanation-text" class="font-medium leading-relaxed">
+                        Jawaban yang benar adalah ...
+                    </p>
+                </div>
+
+                <button onclick="closeExplanation()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-heading font-bold py-3 rounded-xl btn-3d border-b-4 border-blue-800 text-lg">
+                    Saya Mengerti, Lanjut! 🚀
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ================= 4. RESULT & CERTIFICATE SCREEN ================= -->
+        <section id="screen-result" class="w-full hidden space-y-6 text-center">
+            
+            <!-- Certificate Card -->
+            <div id="certificate" class="bg-white rounded-3xl p-6 md:p-8 card-shadow cert-border relative overflow-hidden space-y-4">
+                
+                <!-- Ribbon Header -->
+                <div class="inline-block bg-yellow-400 text-yellow-950 font-heading font-bold text-lg md:text-xl px-6 py-2 rounded-full border-2 border-yellow-600 shadow-sm">
+                    🏆 SERTIFIKAT KELULUSAN MINI 🏆
+                </div>
+
+                <div class="space-y-1">
+                    <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Diberikan Kepada Bintang Pelajar</p>
+                    <h2 id="cert-name" class="font-heading text-3xl md:text-4xl font-bold text-brand-blue underline decoration-yellow-400">
+                        Siswa Hebat SD
+                    </h2>
+                </div>
+
+                <p class="text-sm text-slate-600 font-semibold max-w-md mx-auto">
+                    Telah menyelesaikan latihan ujian <span id="cert-subject" class="font-bold text-slate-800">Matematika</span> dengan hasil luar biasa!
+                </p>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-3 gap-2 max-w-md mx-auto pt-2">
+                    <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl">
+                        <span class="block text-xs font-bold text-emerald-600">Skor Akhir</span>
+                        <span id="cert-score" class="font-heading text-2xl font-bold text-emerald-700">100</span>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 p-3 rounded-2xl">
+                        <span class="block text-xs font-bold text-blue-600">Benar</span>
+                        <span id="cert-correct" class="font-heading text-2xl font-bold text-blue-700">10 Soal</span>
+                    </div>
+                    <div class="bg-yellow-50 border border-yellow-200 p-3 rounded-2xl">
+                        <span class="block text-xs font-bold text-yellow-600">Koin</span>
+                        <span id="cert-coins" class="font-heading text-2xl font-bold text-yellow-700">🪙 50</span>
+                    </div>
+                </div>
+
+                <!-- Mascot Badge -->
+                <div class="flex justify-center items-center gap-3 pt-2">
+                    <div class="w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center text-xl border-2 border-yellow-500 flex-shrink-0">
+                        🐰
+                    </div>
+                    <div class="text-left">
+                        <p id="cert-eval" class="font-heading font-bold text-sm text-slate-800">Hebat Sekali! Kamu Siap Ujian!</p>
+                        <p class="text-xs text-slate-500">Diperiksa oleh: Kiki si Kelinci Pintar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 pt-2 no-print">
+                <button onclick="restartGame()" class="bg-brand-green hover:bg-emerald-600 text-white font-heading font-bold text-lg px-6 py-3.5 rounded-2xl btn-3d border-b-4 border-emerald-800 flex items-center justify-center gap-2">
+                    🔄 Main Lagi
+                </button>
+                <button onclick="printCertificate()" class="bg-brand-blue hover:bg-blue-600 text-white font-heading font-bold text-lg px-6 py-3.5 rounded-2xl btn-3d border-b-4 border-blue-800 flex items-center justify-center gap-2">
+                    🖨️ Cetak / Simpan Sertifikat
+                </button>
+                <button onclick="showScreen('screen-home')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-heading font-bold text-lg px-6 py-3.5 rounded-2xl btn-3d border-b-4 border-slate-400 flex items-center justify-center gap-2">
+                    🏠 Menu Utama
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-xs font-bold text-slate-500">
+        <p>© Petualangan Si Kiki - Web Edukasi Interaktif Kelas 3 & 4 SD Indonesia 🇮🇩</p>
+    </footer>
+
+
+    <!-- ================= GAME LOGIC JAVASCRIPT ================= -->
+    <script>
+        /* ================= QUESTION BANK (KURIKULUM SD KELAS 3-4) ================= */
+        const questionBank = {
+            mtk: [
+                {
+                    q: "Berapakah hasil dari 15 x 6?",
+                    o: ["80", "90", "85", "100"],
+                    a: 1,
+                    e: "15 x 6 = 90. Kamu bisa menghitungnya dengan (10 x 6) + (5 x 6) = 60 + 30 = 90."
+                },
+                {
+                    q: "Ibu membeli 36 buah apel dan membaginya sama rata kepada 4 anaknya. Berapa apel yang diterima setiap anak?",
+                    o: ["8 buah", "9 buah", "7 buah", "6 buah"],
+                    a: 1,
+                    e: "36 dibagi 4 = 9. Jadi tiap anak mendapat 9 buah apel."
+                },
+                {
+                    q: "Pecahan sederhana dari 2/4 sama nilainya dengan ...",
+                    o: ["1/3", "1/2", "3/4", "2/3"],
+                    a: 1,
+                    e: "Jika pembilang (2) dan penyebut (4) sama-sama dibagi 2, hasilnya adalah 1/2."
+                },
+                {
+                    q: "Hitunglah: 250 + 175 - 50 = ...",
+                    o: ["375", "425", "350", "400"],
+                    a: 0,
+                    e: "250 + 175 = 425. Kemudian 425 - 50 = 375."
+                },
+                {
+                    q: "Budi memiliki 3 lembar uang Rp10.000,00. Berapa jumlah seluruh uang Budi?",
+                    o: ["Rp20.000,00", "Rp25.000,00", "Rp30.000,00", "Rp35.000,00"],
+                    a: 2,
+                    e: "3 lembar x Rp10.000 = Rp30.000,00."
+                },
+                {
+                    q: "Sebuah persegi memiliki panjang sisi 8 cm. Berapakah keliling persegi tersebut?",
+                    o: ["16 cm", "32 cm", "24 cm", "64 cm"],
+                    a: 1,
+                    e: "Keliling persegi = 4 x sisi = 4 x 8 cm = 32 cm."
+                },
+                {
+                    q: "Hasil dari 3/8 + 2/8 adalah ...",
+                    o: ["5/8", "5/16", "1/8", "6/8"],
+                    a: 0,
+                    e: "Karena penyebutnya sudah sama (8), tinggal jumlahkan pembilangnya: 3 + 2 = 5/8."
+                }
+            ],
+            indo: [
+                {
+                    q: "Manakah di bawah ini yang merupakan penulisan kata BAKU yang benar?",
+                    o: ["Apotik", "Apotek", "Apotik", "Apetik"],
+                    a: 1,
+                    e: "Menurut KBBI, kata baku yang benar adalah 'Apotek', bukan 'Apotik'."
+                },
+                {
+                    q: "Anak yang suka membantu orang tua dipuji sebagai anak yang 'ringan tangan'. Arti ungkapan 'ringan tangan' adalah ...",
+                    o: ["Suka pemarah", "Suka membantu / rajin", "Pencuri", "Pemalas"],
+                    a: 1,
+                    e: "'Ringan tangan' adalah ungkapan terpuji untuk orang yang suka menolong atau rajin bekerja."
+                },
+                {
+                    q: "Lani rajin berlatih setiap hari [...] ia menjadi juara menyanyi. Kata hubung yang tepat adalah ...",
+                    o: ["sehingga", "tetapi", "atau", "sebelum"],
+                    a: 0,
+                    e: "Kata 'sehingga' menyatakan hubungan sebab-akibat yang tepat."
+                },
+                {
+                    q: "Kalimat berikut yang menggunakan tanda baca yang BENAR adalah ...",
+                    o: ["Ibu membeli: bayam, wortel, dan cabai.", "Ibu membeli bayam wortel dan cabai", "Ibu membeli bayam, wortel, dan cabai.", "Ibu membeli bayam! wortel! dan cabai!"],
+                    a: 2,
+                    e: "Rincian lebih dari dua benda menggunakan tanda koma di setiap kata dan diakhiri titik."
+                },
+                {
+                    q: "Persamaan kata (sinonim) dari kata 'Cerdas' adalah ...",
+                    o: ["Rajin", "Pintar", "Jujur", "Disiplin"],
+                    a: 1,
+                    e: "Cerdas memiliki arti yang sama (sinonim) dengan pintar atau pandai."
+                }
+            ],
+            ipas: [
+                {
+                    q: "Perubahan wujud benda dari CAIR menjadi PADAT disebut ...",
+                    o: ["Mencair", "Membeku", "Menguap", "Menyublim"],
+                    a: 1,
+                    e: "Membeku adalah perubahan wujud dari zat cair menjadi padat (contoh: air dimasukkan freezer jadi es)."
+                },
+                {
+                    q: "Tahapan daur hidup kupu-kupu yang sering merugikan petani karena memakan daun adalah ...",
+                    o: ["Telur", "Ulat (Larva)", "Kepompong (Pupa)", "Kupu-kupu dewasa"],
+                    a: 1,
+                    e: "Fase ulat (larva) memakan dedaunan sangat banyak untuk menyimpan energi sebelum menjadi kepompong."
+                },
+                {
+                    q: "Pusat dari tata surya kita yang dikelilingi oleh planet-planet adalah ...",
+                    o: ["Bumi", "Bulan", "Matahari", "Yupiter"],
+                    a: 2,
+                    e: "Matahari adalah pusat tata surya yang memancarkan cahaya dan gravitasi penyatu planet."
+                },
+                {
+                    q: "Energi yang dihasilkan oleh kipas angin yang sedang menyala adalah energi ...",
+                    o: ["Panas", "Bunyi", "Gerak", "Cahaya"],
+                    a: 2,
+                    e: "Kipas angin mengubah energi listrik menjadi energi gerak (baling-baling berputar)."
+                },
+                {
+                    q: "Bagian tumbuhan yang berfungsi untuk menyerap air dan zat hara dari dalam tanah adalah ...",
+                    o: ["Daun", "Batang", "Bunga", "Akar"],
+                    a: 3,
+                    e: "Akar menancap di tanah untuk menyerap air dan mineral yang dibutuhkan tumbuhan."
+                }
+            ],
+            ing: [
+                {
+                    q: "What is the Indonesian meaning of 'Every morning I drink milk'?",
+                    o: ["Setiap pagi saya minum susu", "Setiap malam saya makan roti", "Setiap pagi saya makan telur", "Kemarin pagi saya minum air"],
+                    a: 0,
+                    e: "'Every morning' = Setiap pagi, 'I drink milk' = Saya minum susu."
+                },
+                {
+                    q: "She [...] to school by bike every day.",
+                    o: ["go", "goes", "went", "going"],
+                    a: 1,
+                    e: "Untuk subjek tunggal 'She' dalam Simple Present Tense, kata kerja ditambah -es menjadi 'goes'."
+                },
+                {
+                    q: "Which one is a FRUIT?",
+                    o: ["Carrot", "Spinach", "Apple", "Potato"],
+                    a: 2,
+                    e: "Apple (Apel) adalah buah (fruit). Carrot, spinach, dan potato adalah sayuran (vegetables)."
+                },
+                {
+                    q: "Look at the time! 07:00 AM in English is ...",
+                    o: ["Seven o'clock in the morning", "Seven o'clock in the evening", "Eight o'clock", "Six o'clock"],
+                    a: 0,
+                    e: "07:00 AM adalah jam 7 pagi (seven o'clock in the morning)."
+                },
+                {
+                    q: "The elephant is [...], but the mouse is small.",
+                    o: ["short", "big", "thin", "cold"],
+                    a: 1,
+                    e: "Lawan kata dari 'small' (kecil) adalah 'big' (besar)."
+                }
+            ]
+        };
+
+        /* ================= GAME STATE VARIABLES ================= */
+        let currentSubject = 'mtk';
+        let currentMode = 'quest'; // 'quest' or 'time'
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let coins = 0;
+        let lives = 3;
+        let timer = 60;
+        let timerInterval = null;
+        let audioEnabled = true;
+
+        /* ================= WEB AUDIO API SYNTHESIZER ================= */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!audioEnabled) return;
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.25); // A5
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.25);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime); // A3
+                    osc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.35); // A2
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.35);
+                } else if (type === 'win') {
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, idx) => {
+                        const osc2 = audioCtx.createOscillator();
+                        const gain2 = audioCtx.createGain();
+                        osc2.connect(gain2);
+                        gain2.connect(audioCtx.destination);
+                        osc2.frequency.value = freq;
+                        gain2.gain.setValueAtTime(0.2, audioCtx.currentTime + idx * 0.1);
+                        gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + idx * 0.1 + 0.3);
+                        osc2.start(audioCtx.currentTime + idx * 0.1);
+                        osc2.stop(audioCtx.currentTime + idx * 0.1 + 0.3);
+                    });
+                }
+            } catch (e) {
+                console.log("Audio play error:", e);
+            }
+        }
+
+        /* ================= SCREEN & UI CONTROLLER ================= */
+        function showScreen(screenId) {
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+            if (timerInterval) clearInterval(timerInterval);
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const icon = document.getElementById('audio-icon');
+            icon.className = audioEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+        }
+
+        function selectSubject(subj) {
+            currentSubject = subj;
+            document.querySelectorAll('.subj-btn').forEach(btn => btn.classList.remove('ring-4', 'ring-yellow-400', 'scale-105'));
+            const selected = document.getElementById(`subj-${subj}`);
+            selected.classList.add('ring-4', 'ring-yellow-400', 'scale-105');
+        }
+
+        function selectMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-card').forEach(card => card.classList.remove('border-yellow-400', 'bg-yellow-50/50'));
+            const selected = document.getElementById(`mode-${mode}`);
+            selected.classList.add('border-yellow-400', 'bg-yellow-50/50');
+        }
+
+        /* ================= GAMEPLAY CONTROLLER ================= */
+        function startGame() {
+            currentQuestions = [...questionBank[currentSubject]].sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            score = 0;
+            coins = 0;
+            lives = 3;
+            timer = 60;
+
+            const subjNames = { mtk: 'Matematika', indo: 'B. Indonesia', ipas: 'IPA / IPAS', ing: 'B. Inggris' };
+            document.getElementById('hud-subject-text').innerText = subjNames[currentSubject];
+            document.getElementById('score-count').innerText = coins;
+
+            if (currentMode === 'quest') {
+                document.getElementById('hud-lives').classList.remove('hidden');
+                document.getElementById('hud-timer').classList.add('hidden');
+                document.getElementById('lives-count').innerText = lives;
+            } else {
+                document.getElementById('hud-lives').classList.add('hidden');
+                document.getElementById('hud-timer').classList.remove('hidden');
+                document.getElementById('timer-count').innerText = `${timer}s`;
+                startTimer();
+            }
+
+            showScreen('screen-game');
+            loadQuestion();
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timer--;
+                document.getElementById('timer-count').innerText = `${timer}s`;
+                if (timer <= 0) {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            if (currentIndex >= currentQuestions.length) {
+                if (currentMode === 'time') {
+                    currentQuestions = [...questionBank[currentSubject]].sort(() => Math.random() - 0.5);
+                    currentIndex = 0;
+                } else {
+                    endGame();
+                    return;
+                }
+            }
+
+            const q = currentQuestions[currentIndex];
+
+            const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            document.getElementById('question-number').innerText = `Soal ${currentIndex + 1} dari ${currentQuestions.length}`;
+            document.getElementById('question-text').innerText = q.q;
+
+            const hints = [
+                "Baca baik-baik pertanyaannya ya!",
+                "Kiki tahu kamu pasti bisa!",
+                "Fokus dan teliti ya, Bintang Pelajar!",
+                "Jangan terburu-buru, pikirkan dulu ya!"
+            ];
+            document.getElementById('mascot-hint').innerText = hints[Math.floor(Math.random() * hints.length)];
+
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+
+            const colors = [
+                'bg-blue-500 border-blue-700 hover:bg-blue-600',
+                'bg-emerald-500 border-emerald-700 hover:bg-emerald-600',
+                'bg-purple-500 border-purple-700 hover:bg-purple-600',
+                'bg-orange-500 border-orange-700 hover:bg-orange-600'
+            ];
+
+            q.o.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `${colors[idx % colors.length]} text-white font-heading font-bold text-lg p-4 rounded-2xl btn-3d border-b-4 text-left flex items-center justify-between transition-all`;
+                btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}. ${opt}</span> <i class="fas fa-arrow-right opacity-60"></i>`;
+                btn.onclick = () => checkAnswer(idx);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const q = currentQuestions[currentIndex];
+
+            if (selectedIndex === q.a) {
+                // Correct
+                playSound('correct');
+                coins += 10;
+                score += 10;
+                document.getElementById('score-count').innerText = coins;
+
+                confetti({ particleCount: 30, spread: 60, origin: { y: 0.7 } });
+
+                currentIndex++;
+                setTimeout(loadQuestion, 350);
+            } else {
+                // Incorrect
+                playSound('wrong');
+
+                if (currentMode === 'quest') {
+                    lives--;
+                    document.getElementById('lives-count').innerText = lives;
+                }
+
+                document.getElementById('explanation-text').innerHTML = `
+                    <strong class="text-red-600 block mb-1">Jawaban yang tepat adalah opsi ${String.fromCharCode(65 + q.a)} (${q.o[q.a]}).</strong>
+                    ${q.e}
+                `;
+                document.getElementById('modal-explanation').classList.remove('hidden');
+            }
+        }
+
+        function closeExplanation() {
+            document.getElementById('modal-explanation').classList.add('hidden');
+
+            if (currentMode === 'quest' && lives <= 0) {
+                endGame();
+            } else {
+                currentIndex++;
+                loadQuestion();
+            }
+        }
+
+        function speakQuestion() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const text = document.getElementById('question-text').innerText;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* ================= GAME OVER & CERTIFICATE ================= */
+        function endGame() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            playSound('win');
+            confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+
+            const subjNames = { mtk: 'Matematika', indo: 'Bahasa Indonesia', ipas: 'IPA / IPAS', ing: 'Bahasa Inggris' };
+            document.getElementById('cert-subject').innerText = subjNames[currentSubject];
+            document.getElementById('cert-score').innerText = score;
+            document.getElementById('cert-correct').innerText = `${Math.floor(score / 10)} Soal`;
+            document.getElementById('cert-coins').innerText = `🪙 ${coins}`;
+
+            const evalText = document.getElementById('cert-eval');
+            if (score >= 50) {
+                evalText.innerText = "Luar Biasa! Kamu Sangat Siap Menghadapi Ujian! 🌟";
+            } else {
+                evalText.innerText = "Bagus! Tetap Semangat Berlatih Lagi Ya! 💪";
+            }
+
+            showScreen('screen-result');
+        }
+
+        function restartGame() {
+            startGame();
+        }
+
+        function printCertificate() {
+            window.print();
+        }
+
+        // Initialize Defaults
+        selectSubject('mtk');
+        selectMode('quest');
+    </script>
+</body>
+</html>
